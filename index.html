@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Luma Client Operations Dashboard</title>
+
+  <meta
+    name="description"
+    content="Luma Client Operations Dashboard - manage clients, invoices, expenses and tasks."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ================= LOGIN SCREEN ================= -->
+
+  <div class="login-screen" id="loginScreen">
+
+    <div class="login-card">
+
+      <div class="login-logo">
+        <span>✦</span>
+        Luma
+      </div>
+
+      <p class="login-label">CLIENT OPERATIONS</p>
+
+      <h1>Welcome back.</h1>
+
+      <p class="login-description">
+        Manage your clients, invoices, expenses and workflow from one place.
+      </p>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label>Email</label>
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="you@example.com"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+
+          <div class="password-field">
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="••••••••"
+              required
+            >
+
+            <button
+              type="button"
+              class="password-toggle"
+              id="passwordToggle"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button class="primary-btn login-btn" type="submit">
+          Sign In
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+      </form>
+
+      <p class="demo-login">
+        Demo login: enter any valid email and password.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= APP ================= -->
+
+  <div class="app hidden" id="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+        <div class="brand-icon">✦</div>
+
+        <div>
+          <strong>Luma</strong>
+          <span>Operations</span>
+        </div>
+      </div>
+
+
+      <nav class="sidebar-nav">
+
+        <p class="nav-title">WORKSPACE</p>
+
+        <button class="nav-item active" data-section="dashboard">
+          <i class="fa-solid fa-grid-2"></i>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-section="clients">
+          <i class="fa-solid fa-users"></i>
+          <span>Clients</span>
+        </button>
+
+        <button class="nav-item" data-section="invoices">
+          <i class="fa-solid fa-file-invoice"></i>
+          <span>Invoices</span>
+        </button>
+
+        <button class="nav-item" data-section="expenses">
+          <i class="fa-solid fa-wallet"></i>
+          <span>Expenses</span>
+        </button>
+
+        <button class="nav-item" data-section="tasks">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Tasks</span>
+        </button>
+
+
+        <p class="nav-title second-title">SYSTEM</p>
+
+        <button class="nav-item" data-section="reports">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Reports</span>
+        </button>
+
+        <button class="nav-item" data-section="settings">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </button>
+
+      </nav>
+
+
+      <div class="sidebar-bottom">
+
+        <div class="upgrade-card">
+
+          <div class="upgrade-icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+
+          <strong>Grow with Luma</strong>
+
+          <p>
+            Keep your business organized and moving forward.
+          </p>
+
+          <button id="upgradeBtn">
+            Explore
+          </button>
+
+        </div>
+
+
+        <button class="logout-btn" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Sign out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+      <!-- TOP BAR -->
+
+      <header class="topbar">
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="topbar-title">
+
+          <span class="breadcrumb">Workspace</span>
+
+          <h2 id="pageTitle">
+            Dashboard
+          </h2>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+          <button class="icon-btn" id="themeToggle" title="Toggle theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+
+          <button class="icon-btn notification-btn" id="notificationBtn">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-dot"></span>
+          </button>
+
+
+          <div class="profile">
+
+            <div class="avatar">
+              LX
+            </div>
+
+            <div class="profile-info">
+              <strong>Luma XDev</strong>
+              <span>Administrator</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- ================= DASHBOARD ================= -->
+
+      <section class="page-section active-section" id="dashboardSection">
+
+        <div class="welcome-row">
+
+          <div>
+
+            <p class="eyebrow">
+              OVERVIEW
+            </p>
+
+            <h1>
+              Good morning, Luma.
+            </h1>
+
+            <p class="section-description">
+              Here's what's happening with your business today.
+            </p>
+
+          </div>
+
+
+          <button class="primary-btn" id="quickAddBtn">
+            <i class="fa-solid fa-plus"></i>
+            Quick Add
+          </button>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+              <span>Total Revenue</span>
+
+              <div class="stat-icon revenue">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+              </div>
+            </div>
+
+            <div class="stat-value" id="totalRevenue">
+              ₹0
+            </div>
+
+            <div class="stat-bottom positive">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+              <span id="revenueChange">12.8%</span>
+              <small>vs last month</small>
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+              <span>Pending Payments</span>
+
+              <div class="stat-icon pending">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+            </div>
+
+            <div class="stat-value" id="pendingPayments">
+              ₹0
+            </div>
+
+            <div class="stat-bottom warning">
+              <i class="fa-solid fa-hourglass-half"></i>
+              <span id="pendingCount">0</span>
+              <small>invoices pending</small>
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+              <span>Total Expenses</span>
+
+              <div class="stat-icon expense">
+                <i class="fa-solid fa-arrow-down"></i>
+              </div>
+            </div>
+
+            <div class="stat-value" id="totalExpenses">
+              ₹0
+            </div>
+
+            <div class="stat-bottom negative">
+              <i class="fa-solid fa-receipt"></i>
+              <span id="expenseCount">0</span>
+              <small>recorded expenses</small>
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+              <span>Active Clients</span>
+
+              <div class="stat-icon clients">
+                <i class="fa-solid fa-users"></i>
+              </div>
+            </div>
+
+            <div class="stat-value" id="activeClients">
+              0
+            </div>
+
+            <div class="stat-bottom positive">
+              <i class="fa-solid fa-user-plus"></i>
+              <span id="clientChange">0</span>
+              <small>clients managed</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- DASHBOARD GRID -->
+
+        <div class="dashboard-grid">
+
+          <!-- REVENUE CHART -->
+
+          <div class="dashboard-card revenue-card">
+
+            <div class="card-header">
+
+              <div>
+                <h3>Revenue Overview</h3>
+                <p>Monthly revenue performance</p>
+              </div>
+
+              <select id="revenuePeriod">
+                <option value="6">Last 6 months</option>
+                <option value="12">Last 12 months</option>
+              </select>
+
+            </div>
+
+            <div class="chart-area">
+
+              <div class="chart-y-axis">
+                <span>₹50k</span>
+                <span>₹40k</span>
+                <span>₹30k</span>
+                <span>₹20k</span>
+                <span>₹10k</span>
+                <span>₹0</span>
+              </div>
+
+              <div class="chart">
+
+                <div class="chart-grid-lines">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <div class="chart-bars" id="chartBars"></div>
+
+                <div class="chart-labels" id="chartLabels"></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- RECENT ACTIVITY -->
+
+          <div class="dashboard-card activity-card">
+
+            <div class="card-header">
+
+              <div>
+                <h3>Recent Activity</h3>
+                <p>Latest workspace updates</p>
+              </div>
+
+              <button class="text-btn" id="viewAllActivity">
+                View all
+              </button>
+
+            </div>
+
+            <div class="activity-list" id="activityList"></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- BOTTOM DASHBOARD -->
+
+        <div class="bottom-grid">
+
+          <!-- UPCOMING TASKS -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <div>
+                <h3>Upcoming Tasks</h3>
+                <p>Things that need your attention</p>
+              </div>
+
+              <button class="text-btn" data-open-section="tasks">
+                View tasks
+              </button>
+
+            </div>
+
+            <div class="mini-task-list" id="dashboardTasks"></div>
+
+          </div>
+
+
+          <!-- PAYMENT SUMMARY -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <div>
+                <h3>Payment Summary</h3>
+                <p>Invoice collection status</p>
+              </div>
+
+            </div>
+
+            <div class="payment-summary">
+
+              <div class="payment-row">
+
+                <div class="payment-label">
+                  <span class="payment-dot paid"></span>
+                  Paid
+                </div>
+
+                <strong id="paidAmount">
+                  ₹0
+                </strong>
+
+              </div>
+
+              <div class="payment-progress">
+                <span id="paidProgress"></span>
+              </div>
+
+
+              <div class="payment-row">
+
+                <div class="payment-label">
+                  <span class="payment-dot pending-dot"></span>
+                  Pending
+                </div>
+
+                <strong id="pendingAmountSmall">
+                  ₹0
+                </strong>
+
+              </div>
+
+              <div class="payment-progress">
+                <span id="pendingProgress"></span>
+              </div>
+
+
+              <div class="payment-row">
+
+                <div class="payment-label">
+                  <span class="payment-dot overdue"></span>
+                  Overdue
+                </div>
+
+                <strong id="overdueAmount">
+                  ₹0
+                </strong>
+
+              </div>
+
+              <div class="payment-progress">
+                <span id="overdueProgress"></span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= CLIENTS ================= -->
+
+      <section class="page-section" id="clientsSection">
+
+        <div class="page-heading">
+
+          <div>
+            <p class="eyebrow">CLIENT MANAGEMENT</p>
+            <h1>Clients</h1>
+            <p class="section-description">
+              Manage your clients and business relationships.
+            </p>
+          </div>
+
+          <button class="primary-btn" id="addClientBtn">
+            <i class="fa-solid fa-plus"></i>
+            Add Client
+          </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="clientSearch"
+              placeholder="Search clients..."
+            >
+          </div>
+
+          <select id="clientStatusFilter">
+            <option value="all">All Clients</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+
+        </div>
+
+
+        <div class="data-card">
+
+          <div class="table-responsive">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Company</th>
+                  <th>Email</th>
+                  <th>Projects</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="clientsTable"></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= INVOICES ================= -->
+
+      <section class="page-section" id="invoicesSection">
+
+        <div class="page-heading">
+
+          <div>
+            <p class="eyebrow">FINANCE</p>
+            <h1>Invoices</h1>
+            <p class="section-description">
+              Create and track client invoices.
+            </p>
+          </div>
+
+          <button class="primary-btn" id="addInvoiceBtn">
+            <i class="fa-solid fa-plus"></i>
+            Create Invoice
+          </button>
+
+        </div>
+
+
+        <div class="invoice-summary-grid">
+
+          <div class="summary-box">
+            <span>Total Invoiced</span>
+            <strong id="invoiceTotal">₹0</strong>
+          </div>
+
+          <div class="summary-box">
+            <span>Paid</span>
+            <strong id="invoicePaid">₹0</strong>
+          </div>
+
+          <div class="summary-box">
+            <span>Pending</span>
+            <strong id="invoicePending">₹0</strong>
+          </div>
+
+          <div class="summary-box">
+            <span>Overdue</span>
+            <strong id="invoiceOverdue">₹0</strong>
+          </div>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="invoiceSearch"
+              placeholder="Search invoices..."
+            >
+          </div>
+
+          <select id="invoiceStatusFilter">
+            <option value="all">All Status</option>
+            <option value="paid">Paid</option>
+            <option value="pending">Pending</option>
+            <option value="overdue">Overdue</option>
+          </select>
+
+        </div>
+
+
+        <div class="data-card">
+
+          <div class="table-responsive">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Client</th>
+                  <th>Issue Date</th>
+                  <th>Due Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="invoicesTable"></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= EXPENSES ================= -->
+
+      <section class="page-section" id="expensesSection">
+
+        <div class="page-heading">
+
+          <div>
+            <p class="eyebrow">FINANCE</p>
+            <h1>Expenses</h1>
+            <p class="section-description">
+              Track your business spending.
+            </p>
+          </div>
+
+          <button class="primary-btn" id="addExpenseBtn">
+            <i class="fa-solid fa-plus"></i>
+            Add Expense
+          </button>
+
+        </div>
+
+
+        <div class="expense-overview">
+
+          <div class="expense-big-card">
+
+            <span>This Month</span>
+
+            <strong id="monthlyExpenses">
+              ₹0
+            </strong>
+
+            <p>
+              Business expenses recorded
+            </p>
+
+          </div>
+
+          <div class="expense-category-card">
+
+            <div class="category-header">
+              <span>Top Category</span>
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
+
+            <strong id="topExpenseCategory">
+              —
+            </strong>
+
+            <p id="topExpenseCategoryAmount">
+              ₹0
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="data-card">
+
+          <div class="table-responsive">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="expensesTable"></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= TASKS ================= -->
+
+      <section class="page-section" id="tasksSection">
+
+        <div class="page-heading">
+
+          <div>
+            <p class="eyebrow">WORKFLOW</p>
+            <h1>Tasks</h1>
+            <p class="section-description">
+              Organize your work and deadlines.
+            </p>
+          </div>
+
+          <button class="primary-btn" id="addTaskBtn">
+            <i class="fa-solid fa-plus"></i>
+            Add Task
+          </button>
+
+        </div>
+
+
+        <div class="task-stats">
+
+          <div>
+            <span>Total</span>
+            <strong id="taskTotal">0</strong>
+          </div>
+
+          <div>
+            <span>Completed</span>
+            <strong id="taskCompleted">0</strong>
+          </div>
+
+          <div>
+            <span>Pending</span>
+            <strong id="taskPending">0</strong>
+          </div>
+
+          <div>
+            <span>High Priority</span>
+            <strong id="taskHigh">0</strong>
+          </div>
+
+        </div>
+
+
+        <div class="tasks-container" id="tasksContainer"></div>
+
+      </section>
+
+
+      <!-- ================= REPORTS ================= -->
+
+      <section class="page-section" id="reportsSection">
+
+        <div class="page-heading">
+
+          <div>
+            <p class="eyebrow">ANALYTICS</p>
+            <h1>Reports</h1>
+            <p class="section-description">
+              Understand your business performance.
+            </p>
+          </div>
+
+          <button class="secondary-btn" id="printReportBtn">
+            <i class="fa-solid fa-print"></i>
+            Print Report
+          </button>
+
+        </div>
+
+
+        <div class="report-grid">
+
+          <div class="report-card">
+
+            <div class="report-icon">
+              <i class="fa-so
