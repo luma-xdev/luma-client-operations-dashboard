@@ -1160,4 +1160,374 @@ function renderActivities() {
           <strong>${escapeHtml(activity.title)}</strong>
           <span>${escapeHtml(activity.time)}</span>
         </div>
-  
+   `;
+
+    container.appendChild(item);
+
+  });
+
+}
+
+
+/* =========================================================
+   RESET DATA
+   ========================================================= */
+
+function resetAllData() {
+
+  const confirmed =
+    confirm(
+      "Reset all dashboard data to the original demo data?"
+    );
+
+
+  if (!confirmed) return;
+
+
+  clients =
+    [...DEFAULT_CLIENTS];
+
+  invoices =
+    [...DEFAULT_INVOICES];
+
+  expenses =
+    [...DEFAULT_EXPENSES];
+
+  tasks =
+    [...DEFAULT_TASKS];
+
+  activities =
+    [...DEFAULT_ACTIVITIES];
+
+  notifications =
+    [...DEFAULT_NOTIFICATIONS];
+
+
+  saveData(
+    STORAGE_KEYS.clients,
+    clients
+  );
+
+  saveData(
+    STORAGE_KEYS.invoices,
+    invoices
+  );
+
+  saveData(
+    STORAGE_KEYS.expenses,
+    expenses
+  );
+
+  saveData(
+    STORAGE_KEYS.tasks,
+    tasks
+  );
+
+  saveData(
+    STORAGE_KEYS.activities,
+    activities
+  );
+
+  saveData(
+    STORAGE_KEYS.notifications,
+    notifications
+  );
+
+
+  renderEverything();
+
+  showToast(
+    "Dashboard data has been reset."
+  );
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(
+  message,
+  type = "success"
+) {
+
+  const container =
+    $("#toastContainer");
+
+
+  const toast =
+    document.createElement("div");
+
+  toast.className =
+    `toast ${
+      type === "error"
+        ? "error"
+        : ""
+    }`;
+
+
+  toast.innerHTML = `
+
+    <i class="fa-solid ${
+      type === "error"
+        ? "fa-circle-exclamation"
+        : "fa-circle-check"
+    }"></i>
+
+    <div class="toast-content">
+
+      <strong>
+        ${type === "error"
+          ? "Something went wrong"
+          : "Success"}
+      </strong>
+
+      <span>
+        ${escapeHtml(message)}
+      </span>
+
+    </div>
+
+  `;
+
+
+  container.appendChild(toast);
+
+
+  setTimeout(
+    () => {
+
+      toast.style.opacity = "0";
+      toast.style.transform =
+        "translateX(30px)";
+
+      setTimeout(
+        () => toast.remove(),
+        250
+      );
+
+    },
+    3000
+  );
+
+}
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function formatCurrency(value) {
+
+  return new Intl.NumberFormat(
+    "en-IN",
+    {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0
+    }
+  ).format(
+    Number(value) || 0
+  );
+
+}
+
+
+function formatDate(dateString) {
+
+  if (!dateString) {
+    return "—";
+  }
+
+
+  const date =
+    new Date(
+      `${dateString}T00:00:00`
+    );
+
+
+  if (Number.isNaN(date.getTime())) {
+    return dateString;
+  }
+
+
+  return date.toLocaleDateString(
+    "en-IN",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+function todayISO() {
+
+  const date =
+    new Date();
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(2, "0");
+
+
+  return `${year}-${month}-${day}`;
+
+}
+
+
+function getInitials(name) {
+
+  return name
+    .split(" ")
+    .slice(0, 2)
+    .map(
+      word =>
+        word.charAt(0)
+    )
+    .join("")
+    .toUpperCase();
+
+}
+
+
+function capitalize(value) {
+
+  if (!value) return "";
+
+  return (
+    value.charAt(0).toUpperCase() +
+    value.slice(1)
+  );
+
+}
+
+
+function emptyState(
+  icon,
+  title,
+  message
+) {
+
+  return `
+
+    <div class="empty-state">
+
+      <i class="fa-solid ${icon}"></i>
+
+      <strong>
+        ${escapeHtml(title)}
+      </strong>
+
+      <span>
+        ${escapeHtml(message)}
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   QUICK ACTION EXTRA STYLES
+   ========================================================= */
+
+const quickActionStyle =
+  document.createElement("style");
+
+quickActionStyle.textContent = `
+
+  .quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .quick-action-btn {
+    min-height: 115px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    color: var(--text-soft);
+    background: #0b0b12;
+
+    border: 1px solid var(--border);
+    border-radius: 13px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    transition: 0.25s ease;
+  }
+
+  .quick-action-btn i {
+    color: var(--primary-light);
+    font-size: 22px;
+  }
+
+  .quick-action-btn:hover {
+    color: white;
+    border-color: rgba(139, 92, 246, 0.4);
+    background: rgba(139, 92, 246, 0.08);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 500px) {
+
+    .quick-actions-grid {
+      grid-template-columns: 1fr;
+    }
+
+  }
+
+`;
+
+document.head.appendChild(
+  quickActionStyle
+);
+
+
+/* =========================================================
+   CONSOLE BRANDING
+   ========================================================= */
+
+console.log(
+  "%c✦ Luma Client Operations Dashboard",
+  "font-size:18px;font-weight:bold;color:#a78bfa;"
+);
+
+console.log(
+  "%cBuilt with HTML, CSS & JavaScript.",
+  "font-size:12px;color:#888;"
+);
