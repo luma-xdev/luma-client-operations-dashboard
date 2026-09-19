@@ -888,4 +888,237 @@
           <div class="report-card">
 
             <div class="report-icon">
-              <i class="fa-so
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <span>Total Revenue</span>
+
+            <strong id="reportRevenue">
+              ₹0
+            </strong>
+
+            <small>Collected revenue</small>
+
+          </div>
+
+
+          <div class="report-card">
+
+            <div class="report-icon">
+              <i class="fa-solid fa-file-invoice-dollar"></i>
+            </div>
+
+            <span>Invoice Value</span>
+
+            <strong id="reportInvoice">
+              ₹0
+            </strong>
+
+            <small>Total invoice value</small>
+
+          </div>
+
+
+          <div class="report-card">
+
+            <div class="report-icon">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <span>Expenses</span>
+
+            <strong id="reportExpenses">
+              ₹0
+            </strong>
+
+            <small>Recorded expenses</small>
+
+          </div>
+
+
+          <div class="report-card">
+
+            <div class="report-icon">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+
+            <span>Net Position</span>
+
+            <strong id="reportNet">
+              ₹0
+            </strong>
+
+            <small>Revenue minus expenses</small>
+
+          </div>
+
+        </div>
+
+
+        <div class="report-large-card">
+
+          <div class="card-header">
+
+            <div>
+              <h3>Business Snapshot</h3>
+              <p>Current workspace statistics</p>
+            </div>
+
+          </div>
+
+          <div class="snapshot-list" id="snapshotList"></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= SETTINGS ================= -->
+
+      <section class="page-section" id="settingsSection">
+
+        <div class="page-heading">
+
+          <div>
+            <p class="eyebrow">SYSTEM</p>
+            <h1>Settings</h1>
+            <p class="section-description">
+              Customize your dashboard experience.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="settings-card">
+
+          <div class="settings-row">
+
+            <div class="settings-info">
+              <div class="settings-icon">
+                <i class="fa-solid fa-moon"></i>
+              </div>
+
+              <div>
+                <strong>Dark Mode</strong>
+                <p>Use the dark dashboard appearance.</p>
+              </div>
+            </div>
+
+            <label class="switch">
+              <input type="checkbox" id="darkModeSwitch">
+              <span></span>
+            </label>
+
+          </div>
+
+
+          <div class="settings-row">
+
+            <div class="settings-info">
+              <div class="settings-icon">
+                <i class="fa-solid fa-bell"></i>
+              </div>
+
+              <div>
+                <strong>Notifications</strong>
+                <p>Show workspace activity notifications.</p>
+              </div>
+            </div>
+
+            <label class="switch">
+              <input type="checkbox" id="notificationSwitch" checked>
+              <span></span>
+            </label>
+
+          </div>
+
+
+          <div class="settings-row">
+
+            <div class="settings-info">
+              <div class="settings-icon">
+                <i class="fa-solid fa-database"></i>
+              </div>
+
+              <div>
+                <strong>Local Data</strong>
+                <p>Your demo data is stored in browser localStorage.</p>
+              </div>
+            </div>
+
+            <button class="danger-btn" id="clearDataBtn">
+              Reset Data
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- ================= MODAL ================= -->
+
+  <div class="modal-overlay" id="modalOverlay">
+
+    <div class="modal" id="modal">
+
+      <div class="modal-header">
+
+        <div>
+          <p class="eyebrow" id="modalEyebrow">
+            CREATE
+          </p>
+
+          <h2 id="modalTitle">
+            Add Item
+          </h2>
+        </div>
+
+        <button class="modal-close" id="modalClose">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= TOAST ================= -->
+
+  <div class="toast-container" id="toastContainer"></div>
+
+
+  <!-- ================= NOTIFICATION PANEL ================= -->
+
+  <div class="notification-panel" id="notificationPanel">
+
+    <div class="notification-header">
+      <div>
+        <strong>Notifications</strong>
+        <span>Recent updates</span>
+      </div>
+
+      <button id="closeNotifications">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="notification-items" id="notificationItems"></div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
